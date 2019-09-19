@@ -22,40 +22,47 @@ class SerialPlatform(BasePlatform):
 
 		self.serial = serial.Serial(self._pconfig.get('port', None), self._pconfig.get('baudrate', 9600))
 
+	def indicate_trigger(self):
+		logging.debug("indicate_trigger")
+
+		command = self._pconfig['messages']['trigger']
+		if command:
+			self.serial.write(str.encode(command))
+
 	def indicate_failure(self):
 		logging.debug("setup_failure")
 
 		command = self._pconfig['messages']['failure']
 		if command:
-			self.serial.write(command)
+			self.serial.write(str.encode(command))
 
 	def indicate_success(self):
 		logging.debug("setup_complete")
 
 		command = self._pconfig['messages']['success']
 		if command:
-			self.serial.write(command)
+			self.serial.write(str.encode(command))
 
 	def indicate_recording(self, state=True):
 		logging.debug("indicate_recording_on %s", state)
 
 		command = self._pconfig['messages']['recording_' + ('start' if state else 'end')]
 		if command:
-			self.serial.write(command)
+			self.serial.write(str.encode(command))
 
 	def indicate_playback(self, state=True):
 		logging.debug("indicate_playback %s", state)
 
 		command = self._pconfig['messages']['playback_' + ('start' if state else 'end')]
 		if command:
-			self.serial.write(command)
+			self.serial.write(str.encode(command))
 
 	def indicate_processing(self, state=True):
 		logging.debug("indicate_processing %s", state)
 
 		command = self._pconfig['messages']['processing_' + ('start' if state else 'end')]
 		if command:
-			self.serial.write(command)
+			self.serial.write(str.encode(command))
 
 	def after_setup(self, trigger_callback=None):
 		logging.debug("after_setup")

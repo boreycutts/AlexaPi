@@ -508,36 +508,38 @@ def trigger_callback(trigger):
 
 def trigger_process(trigger):
 
-	if player.is_playing():
-		player.stop()
+    platform.indicate_trigger()
+
+    if player.is_playing():
+	    player.stop()
 
 	# clean up the temp directory
-	if not debug:
-		for some_file in os.listdir(tmp_path):
-			file_path = os.path.join(tmp_path, some_file)
-			try:
-				if os.path.isfile(file_path):
-					os.remove(file_path)
-			except Exception as exp: # pylint: disable=broad-except
-				logger.warning(exp)
+    if not debug:
+        for some_file in os.listdir(tmp_path):
+            file_path = os.path.join(tmp_path, some_file)
+            try:
+                if os.path.isfile(file_path):
+                    os.remove(file_path)
+            except Exception as exp: # pylint: disable=broad-except
+                logger.warning(exp)
 
-	if event_commands['pre_interaction']:
-		subprocess.Popen(event_commands['pre_interaction'], shell=True, stdout=subprocess.PIPE)
+    if event_commands['pre_interaction']:
+        subprocess.Popen(event_commands['pre_interaction'], shell=True, stdout=subprocess.PIPE)
 
-	force_record = None
-	if trigger.event_type in triggers.types_continuous:
-		force_record = (trigger.continuous_callback, trigger.event_type in triggers.types_vad)
+    force_record = None
+    if trigger.event_type in triggers.types_continuous:
+        force_record = (trigger.continuous_callback, trigger.event_type in triggers.types_vad)
 
-	if trigger.voice_confirm:
-		player.play_speech(resources_path + 'alexayes.mp3')
+    if trigger.voice_confirm:
+        player.play_speech(resources_path + 'alexayes.mp3')
 
-	audio_stream = capture.silence_listener(force_record=force_record)
-	alexa_speech_recognizer(audio_stream)
+    audio_stream = capture.silence_listener(force_record=force_record)
+    alexa_speech_recognizer(audio_stream)
 
-	triggers.enable()
+    triggers.enable()
 
-	if event_commands['post_interaction']:
-		subprocess.Popen(event_commands['post_interaction'], shell=True, stdout=subprocess.PIPE)
+    if event_commands['post_interaction']:
+        subprocess.Popen(event_commands['post_interaction'], shell=True, stdout=subprocess.PIPE)
 
 
 def cleanup(signal, frame):   # pylint: disable=redefined-outer-name,unused-argument
