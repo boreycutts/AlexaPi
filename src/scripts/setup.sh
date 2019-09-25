@@ -126,6 +126,8 @@ fi
 
 read -r -p "Would you like to also install Airplay support (Y/n)? " shairport
 
+echo "Installing vlc manually to allow for sox playback cause the other playback handler is broke af"
+sudo apt install vlc -y
 install_os
 
 cd "${ALEXASRC_DIRECTORY}"
