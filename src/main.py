@@ -418,6 +418,7 @@ def process_response(response):
 
 	if response.status_code == 204:
 		logger.debug("Request Response is null (This is OKAY!)")
+		platform.indicate_playback(False)
 		return
 
 	if response.status_code != 200:

@@ -11,7 +11,7 @@ sound:
   # leave empty for default
   input_device: ""
 
-  playback_handler: "vlc"
+  playback_handler: "sox"
 
   # you can go here with alsa, pulse or others
   # keep blank for the best audio output selected by the underlying code
@@ -33,7 +33,7 @@ sound:
   # Some devices clip off the beginning/end of audio files being played back. The
   # value is the number of seconds of silence to pad the beginning and end of the audio. Only
   # the sox handler supports this configuration option.
-  playback_padding: 0
+  playback_padding: 1.5
 
 # Amazon Alexa settings
 alexa:
@@ -71,10 +71,10 @@ triggers:
 
   pocketsphinx:
     enabled: true
-    voice_confirm: true
+    voice_confirm: false
 
     phrase: "alexa"
-    threshold: 1e-10
+    threshold: 1e-29
 
   snowboy:
     enabled: false
@@ -115,7 +115,7 @@ event_commands:
 
 platform:
   # Name of your platform, e.g. raspberrypi, orangepi, desktop
-  device: "dummy"
+  device: "serial"
 
 platforms:
   # common config for all platforms (if they support the options)
@@ -194,12 +194,12 @@ platforms:
     port: "/dev/ttyACM0"
     baudrate: 9600
     messages:
-      trigger: ""
-      playback_start: "g"
-      playback_end: "x"
-      recording_start: ""
-      recording_end: ""
-      processing_start: ""
-      processing_end: ""
-      failure: ""
-      success: ""
+      trigger: "0"
+      playback_start: "1"
+      playback_end: "2"
+      recording_start: "3"
+      recording_end: "4"
+      processing_start: "5"
+      processing_end: "6"
+      failure: "7"
+      success: "8"

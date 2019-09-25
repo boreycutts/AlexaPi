@@ -54,7 +54,7 @@ class SoxHandler(BaseHandler):
 		if item.offset:
 			sox_cmd.extend(['trim', self.__calculate_offset(item.offset)])
 
-		sox_cmd.extend(['pad', self.playback_padding, self.playback_padding])
+		sox_cmd.extend(['pad', '0', self.playback_padding])
 
 		self.report_play(' '.join(sox_cmd))
 		play_err = u''
